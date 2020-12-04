@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,6 +9,16 @@
 <body>
     <!-- HEADER -->
     <div th:insert="common/header.html" id="header"></div>
+
+    <hr>
+
+    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+    <a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+    <a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
+
+    <hr>
 
     <a th:href="@{/post}">글쓰기</a>
 
@@ -44,6 +54,10 @@
         </tbody>
     </table>
 
+    <a th:href="@{'/post1/edit/1'}">
+        <button>a 글 REST보기</button>
+    </a>
+
     <div>
         <span th:each="pageNum : ${pageList}" th:inline="text">
             <a th:href="@{'/?page=' + ${pageNum}}">[[${pageNum}]]</a>
@@ -60,6 +74,9 @@
 
         <button>검색하기</button>
     </form>
+
+    <hr>
+
 
     <!-- FOOTER -->
     <div th:insert="common/footer.html" id="footer"></div>
